@@ -20,7 +20,12 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
+    public LayerMask whatIsInteractable;
+
     bool grounded;
+
+    [Header("Interaction Check")]
+    public float interactRange;
 
 
     float horizontalInput;
@@ -60,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+        //Jump
         if (Input.GetKey(KeyCode.Space) && canJump && grounded)
         {
             canJump = false;
@@ -67,6 +73,12 @@ public class PlayerMovement : MonoBehaviour
             Jump();
 
             Invoke(nameof(ResetJump), jumpCooldown);
+        }
+
+        //Interact
+        if (Input.GetKey(KeyCode.E))
+        {
+            Interact();
         }
     }
 
@@ -83,6 +95,8 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * airMultiplier * 10f, ForceMode.Force);
         }
+
+        SpeedControl();
 
      }
 
@@ -106,5 +120,16 @@ public class PlayerMovement : MonoBehaviour
     void ResetJump()
     {
         canJump = true;
+    }
+    void Interact()
+    {
+        Collider[] colliderArray = Physics.OverlapSphere(transform.position, interactRange);
+        foreach (Collider collider in colliderArray) 
+        { 
+            //O OBJETO QUE O JOGADOR ESTA INTERAGINDO PRECISA TER O COMPONENTE ITERAGIVEL
+            if (collider.TryGetComponent(out InteractableObj intr)){
+               intr.InteractWith();
+            }
+        }
     }
 }
