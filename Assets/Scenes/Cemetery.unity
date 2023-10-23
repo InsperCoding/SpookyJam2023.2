@@ -426,13 +426,13 @@ MonoBehaviour:
   jumpForce: 12
   jumpCooldown: 0.25
   airMultiplier: 0.4
-  playerHeight: 3
+  playerHeight: 2
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 128
   whatIsInteractable:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 0
   interactRange: 0
 --- !u!4 &22096086
 Transform:
@@ -443,7 +443,7 @@ Transform:
   m_GameObject: {fileID: 22096083}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 141.5, y: 30.4, z: 111}
+  m_LocalPosition: {x: 81.3, y: 75.54, z: 25.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -668,7 +668,7 @@ GameObject:
   - component: {fileID: 72306654}
   - component: {fileID: 72306653}
   - component: {fileID: 72306652}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -743,7 +743,7 @@ Transform:
   m_GameObject: {fileID: 72306651}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -53, y: 0, z: -142}
+  m_LocalPosition: {x: -53, y: -2, z: -142}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
