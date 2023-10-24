@@ -1,18 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class EnemyMovement : MonoBehaviour
+public class PerseguirJogador : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Transform jogador;
+    private NavMeshAgent agente;
+
+    private void Start()
     {
-        
+        agente = GetComponent<NavMeshAgent>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (jogador == null)
+        {
+            Debug.LogWarning("Jogador não está disponível para perseguição.");
+            return;
+        }
+
+        agente.SetDestination(jogador.position);
     }
 }
