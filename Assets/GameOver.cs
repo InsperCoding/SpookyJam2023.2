@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameOver : MonoBehaviour
 {
     public void Retry() {
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadSceneAsync(1);
     }
 
     public void QuitGame() {
