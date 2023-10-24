@@ -20,5 +20,5 @@ public class PerseguirJogador : MonoBehaviour
         }
 
         agente.SetDestination(jogador.position);
-    }
+    } 
 }
