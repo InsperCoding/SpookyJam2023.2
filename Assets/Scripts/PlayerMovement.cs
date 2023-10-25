@@ -34,6 +34,11 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirection;
 
     Rigidbody rb;
+
+    public List<AudioClip> RunningSounds;
+    public AudioSource runAudioSource;
+    private int pos;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -90,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
         if (grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            playRunningSound();
         }
         else
         {
@@ -131,5 +137,13 @@ public class PlayerMovement : MonoBehaviour
                intr.InteractWith();
             }
         }
+    }
+    
+    // Funcao para tocar som da corrida
+    public void playRunningSound(){
+        if ((horizontalInput != 0 || verticalInput != 0) && !runAudioSource.isPlaying) {
+                pos = (int)Mathf.Floor(Random.Range(0, RunningSounds.Count));
+                runAudioSource.PlayOneShot(RunningSounds[pos]);
+            }
     }
 }
