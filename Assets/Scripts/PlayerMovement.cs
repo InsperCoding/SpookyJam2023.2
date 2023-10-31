@@ -32,8 +32,11 @@ public class PlayerMovement : MonoBehaviour
     float verticalInput;
 
     Vector3 moveDirection;
-
     Rigidbody rb;
+
+    public List<AudioClip> RunningSounds;
+    public AudioSource runAudioSource;
+    private int pos;
     // Start is called before the first frame update
     void Start()
     {
@@ -90,6 +93,7 @@ public class PlayerMovement : MonoBehaviour
         if (grounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            playRunningSound();
         }
         else
         {
@@ -130,6 +134,13 @@ public class PlayerMovement : MonoBehaviour
             if (collider.TryGetComponent(out InteractableObj intr)){
                intr.InteractWith();
             }
+        }
+    }
+
+    public void playRunningSound(){
+        if ((horizontalInput != 0 || verticalInput != 0) && !runAudioSource.isPlaying) {
+                pos = (int)Mathf.Floor(Random.Range(0, RunningSounds.Count));
+                runAudioSource.PlayOneShot(RunningSounds[pos]);
         }
     }
 }
