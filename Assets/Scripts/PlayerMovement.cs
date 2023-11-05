@@ -37,10 +37,12 @@ public class PlayerMovement : MonoBehaviour
     public List<AudioClip> RunningSounds;
     public AudioSource runAudioSource;
     private int pos;
+    private Animator anim;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        anim=  GetComponent<Animator>();
         rb.freezeRotation = true;
     }
 
@@ -101,8 +103,21 @@ public class PlayerMovement : MonoBehaviour
         }
 
         SpeedControl();
+        if (rb.velocity != Vector3.zero)
+        {
+            anim.SetBool("isWalking", true);
+            Vector3 p = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            p.Normalize();
+            Quaternion toRotation = Quaternion.LookRotation(p , Vector3.up);
 
-     }
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation,  1);
+        }
+        else
+        {
+            anim.SetBool("isWalking", false);
+        }
+
+    }
 
     void SpeedControl()
     {
