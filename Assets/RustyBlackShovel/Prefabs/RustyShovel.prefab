@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 8174139693483433670}
   - component: {fileID: 5857892740908905327}
   - component: {fileID: -230507161369964174}
+  - component: {fileID: 1939480398783814142}
   m_Layer: 0
   m_Name: RustyShovel
-  m_TagString: Untagged
+  m_TagString: ShovelTag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -134,3 +135,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 0214774cfb429454cb23eef5c58e315b, type: 2}
+--- !u!114 &1939480398783814142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000011881196238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9a92110433d7ab47bddbdfcd6a3fef9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shovelItem: {fileID: 11400000, guid: 0214774cfb429454cb23eef5c58e315b, type: 2}
+  shovelPrefab: {fileID: 1000011881196238}
+  SpawnPositions: []
