@@ -2769,10 +2769,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shovelItem: {fileID: 11400000, guid: 0214774cfb429454cb23eef5c58e315b, type: 2}
   shovelPrefab: {fileID: 1000011881196238, guid: beb87db6153f69442821a348e08035ab, type: 3}
-  mapDimensions: {x: 10, y: 15}
-  obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 128
+  SpawnPositions: []
 --- !u!4 &266640406
 Transform:
   m_ObjectHideFlags: 0
@@ -21706,7 +21703,7 @@ GameObject:
   - component: {fileID: 2096247708}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
