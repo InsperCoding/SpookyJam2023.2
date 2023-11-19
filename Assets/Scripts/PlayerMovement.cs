@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -16,6 +17,13 @@ public class PlayerMovement : MonoBehaviour
     public float jumpCooldown;
     public float airMultiplier;
     bool canJump = true;
+
+    private float standingHeight;
+    public float crouchOffset;
+    private float timeToCrouch;
+    private bool duringCrouchAnimation;
+    public Transform cameraPosition;
+
 
     [Header("Ground Check")]
     public float playerHeight;
@@ -37,10 +45,14 @@ public class PlayerMovement : MonoBehaviour
     public List<AudioClip> RunningSounds;
     public AudioSource runAudioSource;
     private int pos;
+    private Animator anim;
+
+  
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        anim=  GetComponent<Animator>();
         rb.freezeRotation = true;
     }
 
@@ -78,11 +90,41 @@ public class PlayerMovement : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        //Interact
-        if (Input.GetKey(KeyCode.E))
+        //Crouch
+        if (Input.GetKey(KeyCode.LeftControl))
         {
-            Interact();
+            //StartCoroutine(CrouchStand());
+            float targetHeight = Input.GetKey(KeyCode.LeftControl) ? standingHeight : standingHeight - crouchOffset;
+
+            cameraPosition.position = new Vector3(cameraPosition.position.x,
+                                                  cameraPosition.position.y - crouchOffset,
+                                                  cameraPosition.position.z);
         }
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            cameraPosition.position = new Vector3(cameraPosition.position.x,
+                                                  cameraPosition.position.y + crouchOffset,
+                                                  cameraPosition.position.z);
+        }
+
+    }
+
+    IEnumerator CrouchStand()
+    {
+        duringCrouchAnimation = true;
+        float timeElapsed = 0f;
+        float targetHeight = Input.GetKey(KeyCode.LeftControl) ? standingHeight : standingHeight - crouchOffset;
+        Debug.Log("Crouch");
+        while (timeElapsed < timeToCrouch) {
+            Debug.Log("loop time");
+            cameraPosition.position = new Vector3(cameraPosition.position.x ,
+                Mathf.Lerp(cameraPosition.position.y, cameraPosition.position.y - standingHeight + targetHeight, timeElapsed),
+                cameraPosition.position.z);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        duringCrouchAnimation = false;
     }
 
     void MovePlayer()
@@ -101,8 +143,21 @@ public class PlayerMovement : MonoBehaviour
         }
 
         SpeedControl();
+        if (rb.velocity != Vector3.zero)
+        {
+            anim.SetBool("isWalking", true);
+            Vector3 p = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            p.Normalize();
+            Quaternion toRotation = Quaternion.LookRotation(p , Vector3.up);
 
-     }
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation,  1);
+        }
+        else
+        {
+            anim.SetBool("isWalking", false);
+        }
+
+    }
 
     void SpeedControl()
     {
