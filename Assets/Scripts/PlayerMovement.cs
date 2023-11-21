@@ -199,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 <<<<<<< HEAD
-     
+    
     // Funcao para tocar som da corrida
 =======
 
