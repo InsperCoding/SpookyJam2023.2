@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class CoffinOpening : MonoBehaviour
 {
-    public float interactionDistance = 3f; // A distância máxima para interagir com o caixão.
+    public float interactionDistance = 3f;
     private float interactTimer = 0f;
     private bool interacting = false;
+    private bool isOpen = false; // Adicionada variável para rastrear o estado do caixão.
     private GameObject targetCoffin;
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.E) && !interacting)
+        if (Input.GetKey(KeyCode.E) && !interacting && !isOpen)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -31,23 +32,29 @@ public class CoffinOpening : MonoBehaviour
             interactTimer += Time.deltaTime;
 
             // Mova o caixão ao longo do eixo X enquanto a tecla "E" estiver pressionada.
-            float moveAmount = Time.deltaTime * 1f; // Ajuste a velocidade de abertura do caixão conforme necessário.
+            float moveAmount = Time.deltaTime * 1f;
             Vector3 newPosition = targetCoffin.transform.position;
-            newPosition.x += moveAmount/2;
+            newPosition.x += moveAmount / 2;
             targetCoffin.transform.position = newPosition;
 
             if (interactTimer >= 5f)
             {
-                // O jogador segurou "E" por 5 segundos, conclua a abertura do caixão.
+                isOpen = true; // Define o estado do caixão como aberto.
                 interacting = false;
                 interactTimer = 0f;
             }
 
             if (!Input.GetKey(KeyCode.E))
             {
-                // O jogador parou de pressionar "E", pare a interação.
                 interacting = false;
-                interactTimer = 0f;
+
+                if (isOpen)
+                {
+                    // Se o caixão estiver aberto e o jogador parou de pressionar "E",
+                    // comece a fechar o caixão.
+                    interactTimer = 0f;
+                    isOpen = false;
+                }
             }
         }
     }
