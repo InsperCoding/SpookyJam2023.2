@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Coffin
+  - ShovelTag
+  - Door
   layers:
   - Default
   - TransparentFX
